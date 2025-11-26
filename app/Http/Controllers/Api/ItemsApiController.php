@@ -9,6 +9,7 @@ class ItemsApiController extends Controller
 {
     protected function sampleItems()
     {
+        // fallback sample data for when DB is unavailable
         return [
             [
                 'id' => 1,
@@ -45,11 +46,28 @@ class ItemsApiController extends Controller
 
     public function index()
     {
+        // Prefer DB-backed items when available
+        try {
+            $items = \App\Models\Item::orderBy('created_at', 'desc')->get();
+            if ($items->count()) {
+                return response()->json($items);
+            }
+        } catch (\Throwable $e) {
+            // ignore DB errors and fall back to sample data
+        }
+
         return response()->json($this->sampleItems());
     }
 
     public function show($id)
     {
+        try {
+            $item = \App\Models\Item::find($id);
+            if ($item) return response()->json($item);
+        } catch (\Throwable $e) {
+            // ignore DB errors below
+        }
+
         $items = $this->sampleItems();
         foreach ($items as $item) {
             if ((int)$item['id'] === (int)$id) {

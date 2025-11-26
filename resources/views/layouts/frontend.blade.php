@@ -50,6 +50,7 @@
         <nav class="flex items-center gap-3">
           <a href="/frontend" class="text-sm px-3 py-2 rounded hover:bg-slate-100">Home</a>
           <a href="/frontend/items" class="text-sm px-3 py-2 rounded bg-indigo-600 text-white shadow-sm hover:bg-indigo-700">Items</a>
+          <a href="/items" class="text-sm px-3 py-2 rounded hover:bg-slate-100">Manage</a>
           <a href="/docs" class="ml-4 text-sm px-3 py-2 rounded hover:bg-slate-100 hidden md:inline">Docs</a>
         </nav>
       </div>

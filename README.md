@@ -101,6 +101,37 @@ docker compose exec app vendor/bin/phpunit
 Environment
 - The docker compose file sets up a MySQL database at host `db` and Redis at `redis`. Default DB credentials are in `docker-compose.yml`.
 
+Troubleshooting DB host resolution
+
+If you see an error like `SQLSTATE[HY000] [2002] php_network_getaddresses: getaddrinfo for db failed: No such host is known.` it means your app is configured to connect to a host named `db` but that hostname can't be resolved on the current runtime.
+
+Common fixes:
+
+- If you're using the included Docker compose stack, ensure the containers are running and healthy:
+
+```powershell
+docker compose up -d --build
+docker compose ps
+```
+
+- If you run the app with `php artisan serve` (outside of Docker) update `.env` and set `DB_HOST=127.0.0.1` (or the host where your MySQL server is running). Then run migrations.
+
+- As a convenient local dev alternative you can use SQLite (requires no TCP host):
+
+```
+DB_CONNECTION=sqlite
+DB_DATABASE=./database/database.sqlite
+```
+
+Create the sqlite file and run migrations:
+
+```powershell
+New-Item -Path database\database.sqlite -ItemType File
+php artisan migrate --seed
+```
+
+Note: The web admin listing now falls back to a small demo set if the DB cannot be reached — so the UI shouldn't crash with a 500 while you're iterating locally.
+
 Note: `docker.compose.yml` is also provided (same content) in case you requested that specific filename.
 
 ### Simple frontend demo

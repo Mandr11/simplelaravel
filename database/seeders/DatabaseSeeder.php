@@ -21,5 +21,8 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
+
+        // seed demo items for the frontend
+        $this->call([ItemSeeder::class]);
     }
 }
