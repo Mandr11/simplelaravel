@@ -16,7 +16,6 @@ class Item extends Model
         'description',
         'tags',
         'image',
-        'created_at'
     ];
 
     protected $casts = [

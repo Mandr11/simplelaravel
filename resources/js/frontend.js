@@ -93,8 +93,8 @@ document.addEventListener('DOMContentLoaded', function () {
                   <div class="mt-3 text-sm text-slate-500">By <strong>${escapeHtml(data.author || 'Unknown')}</strong> · ${escapeHtml(created)}</div>
                 </div>
                 <div class="flex gap-2">
-                  <button class="px-3 py-1 border rounded text-sm hover:bg-slate-50">Edit</button>
-                  <button class="px-3 py-1 bg-red-600 text-white rounded text-sm hover:bg-red-700">Delete</button>
+                  <a href="/items/${data.id}/edit" class="px-3 py-1 border rounded text-sm hover:bg-slate-50">Edit</a>
+                  <button id="delete-btn" class="px-3 py-1 bg-red-600 text-white rounded text-sm hover:bg-red-700">Delete</button>
                 </div>
               </div>
 
@@ -121,6 +121,24 @@ document.addEventListener('DOMContentLoaded', function () {
           </aside>
         </div>
       `
+
+      document.getElementById('delete-btn').addEventListener('click', async () => {
+        if (!confirm('Are you sure you want to delete this item?')) return
+
+        try {
+          const r = await fetch('/api/items/' + encodeURIComponent(id), {
+            method: 'DELETE',
+            headers: { 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') }
+          })
+          if (!r.ok) {
+            const json = await r.json().catch(() => ({}))
+            throw new Error(json.message || r.statusText)
+          }
+          window.location.href = '/frontend/items'
+        } catch (err) {
+          alert('Failed to delete item: ' + err.message)
+        }
+      })
     } catch (err) {
       root.innerHTML = `<div class="text-sm text-red-500">Failed: ${escapeHtml(err.message)}</div>`
     }
