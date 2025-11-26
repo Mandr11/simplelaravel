@@ -7,6 +7,7 @@ RUN apt-get update \
         git curl zip unzip \
         libzip-dev libpng-dev libjpeg-dev libfreetype6-dev \
         libonig-dev libxml2-dev libicu-dev zlib1g-dev \
+        nodejs npm \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) pdo pdo_mysql zip exif pcntl bcmath gd opcache intl xml sockets \
     && pecl install redis \
@@ -20,10 +21,13 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www/html
 
 # Copy semua source code project Laravel (termasuk artisan)
-COPY . . 
+COPY . .
 
 # Install Laravel dependency
 RUN composer install --prefer-dist --no-progress --no-suggest --no-interaction --optimize-autoloader
+
+# Install npm dependencies and build Vite assets
+RUN npm install && npm run build
 
 # (Optional) Set permission untuk storage dan cache
 RUN chmod -R 775 storage bootstrap/cache
