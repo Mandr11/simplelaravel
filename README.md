@@ -126,6 +126,39 @@ npm run build
 
 If you run the app inside the `app` container, you can execute the Vite commands there if Node is installed in the container — otherwise, run them on your host machine and mount built assets into `public`.
 
+Docker runtime troubleshooting
+
+- If you get a 500 after starting the containers, common causes are missing PHP deps (vendor/) or missing built assets (public/build/manifest.json).
+- The compose setup mounts your project into the `app` container; if your host doesn't have `vendor/` or built assets, the container can be started but the app will 500.
+
+Quick Docker troubleshooting steps:
+
+1. Rebuild and restart containers (rebuild the image and run the app's entrypoint which will install deps if needed):
+
+```powershell
+docker compose up -d --build
+```
+
+2. If the app still 500s, open an interactive shell and inspect logs / install deps manually:
+
+```powershell
+docker compose exec app bash
+# inside container
+composer install
+npm install && npm run build
+php artisan view:clear
+php artisan cache:clear
+exit
+```
+
+3. Tail container logs while you reproduce the error to see details:
+
+```powershell
+docker compose logs -f app
+```
+
+I added an idempotent `docker-entrypoint.sh` which runs composer/npm build if needed and clears compiled views — that should reduce 500 failures when the container starts with empty volumes.
+
 Pages added by the demo
 
 - /frontend — landing page for the Blade demo

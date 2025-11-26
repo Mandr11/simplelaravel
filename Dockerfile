@@ -23,6 +23,10 @@ WORKDIR /var/www/html
 # Copy semua source code project Laravel (termasuk artisan)
 COPY . .
 
+# Copy entrypoint script into image and make it executable
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
 # Install Laravel dependency
 RUN composer install --prefer-dist --no-progress --no-suggest --no-interaction --optimize-autoloader
 
@@ -35,5 +39,7 @@ RUN chmod -R 775 storage bootstrap/cache
 # Expose port aplikasi
 EXPOSE 8000
 
+# Entrypoint will run checks (composer install, npm build) when container starts
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 # Command untuk run Laravel (sesuaikan production atau dev)
 CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
