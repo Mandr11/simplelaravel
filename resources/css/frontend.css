@@ -1,0 +1,5 @@
+/* reuse the project's global app.css (which imports tailwind) and add a couple tiny tweaks */
+@import './app.css';
+
+/* tiny tweaks for the demo page */
+body { font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; }

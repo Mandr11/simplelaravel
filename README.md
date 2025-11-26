@@ -102,3 +102,37 @@ Environment
 - The docker compose file sets up a MySQL database at host `db` and Redis at `redis`. Default DB credentials are in `docker-compose.yml`.
 
 Note: `docker.compose.yml` is also provided (same content) in case you requested that specific filename.
+
+### Simple frontend demo
+
+I added a small demo frontend you can open at: http://localhost:8000/frontend
+
+This page is a tiny Vite-powered UI that fetches example JSON from /api/items and renders it in the browser.
+
+Frontend development tips:
+
+- Install JS deps and run Vite (in a separate terminal) for hot reload:
+
+```powershell
+npm install
+npm run dev
+```
+
+- Build the frontend assets for production:
+
+```powershell
+npm run build
+```
+
+If you run the app inside the `app` container, you can execute the Vite commands there if Node is installed in the container — otherwise, run them on your host machine and mount built assets into `public`.
+
+Pages added by the demo
+
+- /frontend — landing page for the Blade demo
+- /frontend/items — items list (click "Load items" to fetch /api/items)
+- /frontend/items/{id} — item detail (fetches /api/items/{id})
+
+All API endpoints are available under `/api`:
+
+- GET /api/items — list items
+- GET /api/items/{id} — single item
