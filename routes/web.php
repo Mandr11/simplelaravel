@@ -15,3 +15,4 @@ Route::get('/frontend/items/{id}', [FrontendController::class, 'show']);
 
 // Basic web CRUD for items (uses the ItemController created earlier)
 Route::resource('items', ItemController::class);
+Route::view('/docs', 'frontend.docs')->name('docs');
