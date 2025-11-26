@@ -9,8 +9,7 @@
       @vite(['resources/css/frontend.css', 'resources/js/frontend.js'])
     @else
       {{-- Vite dev server or built manifest not available. Load Tailwind CDN as a friendly fallback so pages look good without building assets. --}}
-        <!-- Tailwind CDN fallback: makes the app look good even when Vite assets are missing -->
-      <script src="https://cdn.tailwindcss.com"></script>
+        <script src="https://cdn.tailwindcss.com"></script>
       <script>
         // small tailwind config override so custom colours and forms look nice by default
         tailwind.config = {
@@ -48,10 +47,26 @@
           </div>
         </a>
 
+        @php
+            // Ambil nama halaman yang di-yield oleh view saat ini
+            $currentPage = View::yieldContent('page');
+            
+            // Definisikan kelas CSS untuk state default dan active
+            $defaultClass = 'text-sm px-3 py-2 rounded hover:bg-slate-100';
+            $activeClass = 'text-sm px-3 py-2 rounded bg-indigo-600 text-white shadow-sm hover:bg-indigo-700';
+        @endphp
+
         <nav class="flex items-center gap-3">
-          <a href="/frontend" class="text-sm px-3 py-2 rounded hover:bg-slate-100">Home</a>
-          <a href="/frontend/items" class="text-sm px-3 py-2 rounded bg-indigo-600 text-white shadow-sm hover:bg-indigo-700">Items</a>
-          <a href="/items" class="text-sm px-3 py-2 rounded hover:bg-slate-100">Manage</a>
+          {{-- Home: Aktif jika halaman adalah 'index' --}}
+          <a href="/frontend" class="{{ $currentPage === 'index' ? $activeClass : $defaultClass }}">Home</a>
+          
+          {{-- Books (Frontend List): Aktif jika halaman adalah 'items' atau 'show' (halaman detail frontend) --}}
+          <a href="/frontend/items" class="{{ $currentPage === 'items' || $currentPage === 'show' ? $activeClass : $defaultClass }}">Books</a>
+          
+          {{-- Manage Books (Admin CRUD): Aktif jika halaman dimulai dengan 'items-' atau 'items-admin' --}}
+          <a href="/items" class="{{ Str::startsWith($currentPage, 'items-') || $currentPage === 'items-admin' ? $activeClass : $defaultClass }}">Manage Books</a>
+          
+          {{-- Docs --}}
           <a href="/docs" class="ml-4 text-sm px-3 py-2 rounded hover:bg-slate-100 hidden md:inline">Docs</a>
         </nav>
       </div>

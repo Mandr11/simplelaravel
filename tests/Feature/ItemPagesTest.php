@@ -34,5 +34,14 @@ class ItemPagesTest extends TestCase
         $resp = $this->get('/items/' . $item->id . '/edit');
         $resp->assertStatus(200);
         $resp->assertSee('Edit Item');
+    public function test_frontend_show_page_for_item()
+    {
+        $item = Item::factory()->create([
+            'title' => 'My frontend show item',
+        ]);
+
+        $resp = $this->get('/frontend/items/' . $item->id);
+        $resp->assertStatus(200);
+        $resp->assertSee('My frontend show item');
     }
 }

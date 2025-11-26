@@ -15,12 +15,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        // Gunakan firstOrCreate untuk menghindari duplikasi
+        User::factory()->firstOrCreate(
+            [
+                'email' => 'test@example.com'
+            ],
+            [
+                'name' => 'Test User',
+            ]
+        );
 
         // seed demo items for the frontend
         $this->call([ItemSeeder::class]);
