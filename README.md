@@ -129,6 +129,8 @@ If you run the app inside the `app` container, you can execute the Vite commands
 Pages added by the demo
 
 - /frontend — landing page for the Blade demo
+ - / (root) — now points to the Blade frontend demo (same as `/frontend`)
+ - /frontend — landing page for the Blade demo
 - /frontend/items — items list (click "Load items" to fetch /api/items)
 - /frontend/items/{id} — item detail (fetches /api/items/{id})
 
@@ -136,3 +138,8 @@ All API endpoints are available under `/api`:
 
 - GET /api/items — list items
 - GET /api/items/{id} — single item
+
+Appearance and default route
+
+- The frontend UI has been refreshed with a modern-looking header, hero area, and cards using Tailwind utilities.
+- The app root `/` now serves the frontend demo so opening the base URL loads the Blade frontend directly.
