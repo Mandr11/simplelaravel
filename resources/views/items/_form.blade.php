@@ -11,6 +11,7 @@
              px-4 text-base text-slate-800 shadow-sm
              focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition"
       required>
+      @error('title')<p class="text-xs text-red-500 mt-1">{{ $message }}</p>@enderror
   </div>
 
   {{-- SUBTITLE --}}
@@ -21,6 +22,7 @@
       class="mt-2 w-full h-14 rounded-xl bg-slate-50 border border-slate-300 
              px-4 text-base text-slate-800 shadow-sm
              focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition">
+      @error('subtitle')<p class="text-xs text-red-500 mt-1">{{ $message }}</p>@enderror
   </div>
 
   {{-- AUTHOR --}}
@@ -31,6 +33,7 @@
       class="mt-2 w-full h-14 rounded-xl bg-slate-50 border border-slate-300 
              px-4 text-base text-slate-800 shadow-sm
              focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition">
+      @error('author')<p class="text-xs text-red-500 mt-1">{{ $message }}</p>@enderror
   </div>
 
   {{-- IMAGE --}}
@@ -41,6 +44,7 @@
       class="mt-2 w-full h-14 rounded-xl bg-slate-50 border border-slate-300 
              px-4 text-base text-slate-800 shadow-sm
              focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition">
+      @error('image')<p class="text-xs text-red-500 mt-1">{{ $message }}</p>@enderror
   </div>
 
   {{-- TAGS --}}
@@ -51,6 +55,7 @@
       class="mt-2 w-full h-14 rounded-xl bg-slate-50 border border-slate-300 
              px-4 text-base text-slate-800 shadow-sm
              focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition">
+      @error('tags')<p class="text-xs text-red-500 mt-1">{{ $message }}</p>@enderror
   </div>
 
   {{-- DESCRIPTION --}}
@@ -61,8 +66,25 @@
              px-4 py-4 text-base text-slate-800 shadow-sm
              focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition"
     >{{ old('description', $item->description ?? '') }}</textarea>
+      @error('description')<p class="text-xs text-red-500 mt-1">{{ $message }}</p>@enderror
   </div>
 
+  {{-- NEW: KEYWORD CONFIRMATION --}}
+  <div class="pt-2"> 
+    <label for="confirmation_keyword" class="text-sm font-semibold text-red-700 tracking-wide">
+      Konfirmasi Simpan: Ketik **"laravel"** untuk menyimpan/memperbarui
+    </label>
+    <input type="text" name="confirmation_keyword" id="confirmation_keyword"
+      class="mt-2 w-full h-14 rounded-xl bg-red-50 border border-red-300 
+             px-4 text-base text-slate-800 shadow-sm
+             focus:ring-2 focus:ring-red-400 focus:border-red-400 transition"
+      required>
+      {{-- Tampilkan pesan error jika kata kunci salah --}}
+      @error('confirmation_keyword')
+        <p class="text-sm text-red-600 mt-1 font-medium">⚠️ {{ $message == 'The confirmation keyword field is required.' ? 'Kata kunci konfirmasi wajib diisi.' : 'Kata kunci yang Anda masukkan salah. Harus "laravel".' }}</p>
+      @enderror
+  </div>
+  
   {{-- BUTTONS --}}
   <div class="pt-6 flex justify-end gap-3">
 
