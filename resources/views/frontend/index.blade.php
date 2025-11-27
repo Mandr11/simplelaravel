@@ -9,7 +9,7 @@
     <div class="card p-8 text-center bg-white/70 backdrop-blur-sm">
       <h1 class="text-4xl font-extrabold mb-2 text-indigo-700">Welcome to the AmBookstore</h1>
       <p class="text-xl text-gray-600 mb-6">
-        Aplikasi Berbasis Laravel untuk mengatur buku mu.
+        Aplikasi Berbasis Laravel blade untuk mengatur buku mu.
       </p>
       
       <div class="flex justify-center gap-4">
