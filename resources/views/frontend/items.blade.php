@@ -55,6 +55,23 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           @foreach ($items as $item)
             <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
+              
+              {{-- START: Book Cover (with fixed size h-48) --}}
+              <a href="{{ url('/frontend/items', $item->id) }}" class="block relative group">
+                  @php
+                      // Gunakan placeholder jika gambar kosong untuk memastikan ukuran seragam
+                      $imageUrl = $item->image ?: 'https://via.placeholder.com/400x250?text=Book+Cover+Missing';
+                  @endphp
+                  <img
+                      src="{{ $imageUrl }}"
+                      alt="Cover for {{ $item->title }}"
+                      {{-- Class untuk memastikan ukuran seragam h-48 dan memenuhi wadah --}}
+                      class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
+                      onerror="this.onerror=null;this.src='https://via.placeholder.com/400x250?text=Book+Cover+Missing';"
+                  />
+              </a>
+              {{-- END: Book Cover --}}
+
               <div class="p-6">
                 <h2 class="text-xl font-bold text-slate-800">{{ $item->title }}</h2>
                 <p class="text-sm text-slate-500 mt-1">by **{{ $item->author }}**</p>
@@ -71,6 +88,7 @@
                     @endif
                 </div>
               </div>
+
               <div class="bg-slate-50 px-6 py-3">
                   <div class="flex items-center justify-end gap-2">
                     {{-- Link ke detail frontend --}}
