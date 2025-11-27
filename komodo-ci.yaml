@@ -1,0 +1,26 @@
+version: "1"
+
+variables:
+  IMAGE_NAME: my-laravel-image
+  DOCKERFILE: ./Dockerfile
+  CONTEXT: .
+  TAG: latest
+
+triggers:
+  branches:
+    - uifixed
+
+stages:
+  - build
+
+jobs:
+  build-image:
+    stage: build
+    runs_on: docker
+    steps:
+      - name: Checkout repository
+        uses: git-checkout
+
+      - name: Build Docker image
+        run: |
+          docker build -f "${DOCKERFILE}" -t "${IMAGE_NAME}:${TAG}" "${CONTEXT}"
