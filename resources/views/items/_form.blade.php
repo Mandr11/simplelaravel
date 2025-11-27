@@ -72,7 +72,7 @@
   {{-- NEW: KEYWORD CONFIRMATION --}}
   <div class="pt-2"> 
     <label for="confirmation_keyword" class="text-sm font-semibold text-red-700 tracking-wide">
-      Konfirmasi Simpan: Ketik **"laravel"** untuk menyimpan/memperbarui
+      Konfirmasi Simpan:
     </label>
     <input type="text" name="confirmation_keyword" id="confirmation_keyword"
       class="mt-2 w-full h-14 rounded-xl bg-red-50 border border-red-300 
