@@ -6,7 +6,7 @@
   <div>
     <div class="flex items-center justify-between mb-6">
       <div>
-        <h1 class="text-3xl font-bold">Explore Books</h1>
+        <h1 class="text-3xl font-bold">Explore books</h1>
         <p class="text-slate-500 mt-1">Discover items in the collection, filtered by your criteria.</p>
       </div>
       <div>
