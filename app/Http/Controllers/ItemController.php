@@ -46,7 +46,6 @@ class ItemController extends Controller
 
     public function store(Request $request)
     {
-        // PERUBAHAN DI SINI: Tambahkan validasi untuk 'confirmation_keyword'
         $data = $request->validate([
             'title' => 'required|string|max:255',
             'subtitle' => 'nullable|string|max:255',
@@ -54,14 +53,10 @@ class ItemController extends Controller
             'description' => 'nullable|string',
             'tags' => 'nullable|string',
             'image' => 'nullable|url',
-            'confirmation_keyword' => ['required', 'string', 'in:laravel'], // Wajib ketik "laravel"
         ]);
 
         // tags provided as comma separated string — store as array
         $data['tags'] = array_key_exists('tags', $data) && $data['tags'] ? array_map('trim', explode(',', $data['tags'])) : [];
-        
-        // Hapus field konfirmasi agar tidak disimpan ke database
-        unset($data['confirmation_keyword']); 
 
         try {
             Item::create($data);
@@ -100,7 +95,6 @@ class ItemController extends Controller
 
     public function update(Request $request, $item)
     {
-        // PERUBAHAN DI SINI: Tambahkan validasi untuk 'confirmation_keyword'
         $data = $request->validate([
             'title' => 'required|string|max:255',
             'subtitle' => 'nullable|string|max:255',
@@ -108,13 +102,9 @@ class ItemController extends Controller
             'description' => 'nullable|string',
             'tags' => 'nullable|string',
             'image' => 'nullable|url',
-            'confirmation_keyword' => ['required', 'string', 'in:laravel'], // Wajib ketik "laravel"
         ]);
 
         $data['tags'] = array_key_exists('tags', $data) && $data['tags'] ? array_map('trim', explode(',', $data['tags'])) : [];
-        
-        // Hapus field konfirmasi agar tidak disimpan ke database
-        unset($data['confirmation_keyword']);
 
         try {
             $model = Item::findOrFail($item);
