@@ -81,7 +81,7 @@
       required>
       {{-- Tampilkan pesan error jika kata kunci salah --}}
       @error('confirmation_keyword')
-        <p class="text-sm text-red-600 mt-1 font-medium">⚠️ {{ $message == 'The confirmation keyword field is required.' ? 'Kata kunci konfirmasi wajib diisi.' : 'Kata kunci yang Anda masukkan salah. Harus "laravel".' }}</p>
+        <p class="text-sm text-red-600 mt-1 font-medium">⚠️ {{ $message == 'The confirmation keyword field is required.' ? 'Kata kunci konfirmasi wajib diisi.' : 'Kata kunci yang Anda masukkan salah. }}</p>
       @enderror
   </div>
   
