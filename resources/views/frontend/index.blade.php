@@ -7,7 +7,7 @@
     
     {{-- Awal: Hero / Welcome Section --}}
     <div class="card p-8 text-center bg-white/70 backdrop-blur-sm">
-      <h1 class="text-4xl font-extrabold mb-2 text-indigo-700">Selamat Datang di Dhani Store</h1>
+      <h1 class="text-4xl font-extrabold mb-2 text-indigo-700">Selamat Datang di Dhani book Store</h1>
       <p class="text-xl text-gray-600 mb-6">
         Aplikasi Berbasis Laravel blade untuk mengatur buku mu.
       </p>
